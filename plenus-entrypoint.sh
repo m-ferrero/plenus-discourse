@@ -1,7 +1,11 @@
 #!/bin/bash
 
 # init or update db
-rake db:migrate
+if [ ! -f /shared/state/plenus/db_initialized ]; then
+  rake db:migrate
+  mkdir -p /shared/state/plenus
+  touch /shared/state/plenus/db_initialized
+fi
 
 # init SiteSetting.notification_email on first startup
 if [ ! -f /shared/state/plenus/notification_email_set ]; then
